@@ -1,10 +1,3 @@
-<template>
-    <div class="draggable-box" :style="{ top: position.y + 'px', left: position.x + 'px' }" @mousedown="startDrag"
-        ref="boxRef">
-        <slot />
-    </div>
-</template>
-
 <script setup lang="ts">
 import { ref, defineExpose } from 'vue'
 
@@ -49,6 +42,13 @@ const stopDrag = () => {
 
 defineExpose({ boxRef })
 </script>
+
+<template>
+    <div class="draggable-box" :style="{ top: position.y + 'px', left: position.x + 'px' }" @mousedown="startDrag"
+        ref="boxRef">
+        <slot />
+    </div>
+</template>
 
 <style scoped>
 .draggable-box {

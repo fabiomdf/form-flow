@@ -1,10 +1,3 @@
-<template>
-    <svg class="connection-line">
-        <line v-if="startPoint && endPoint" :x1="startPoint.x" :y1="startPoint.y" :x2="endPoint.x" :y2="endPoint.y"
-            stroke="black" stroke-width="2" />
-    </svg>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
@@ -39,6 +32,13 @@ onMounted(() => {
     updatePositions()
 })
 </script>
+
+<template>
+    <svg class="connection-line">
+        <line v-if="startPoint && endPoint" :x1="startPoint.x" :y1="startPoint.y" :x2="endPoint.x" :y2="endPoint.y"
+            stroke="black" stroke-width="2" />
+    </svg>
+</template>
 
 <style scoped>
 .connection-line {
