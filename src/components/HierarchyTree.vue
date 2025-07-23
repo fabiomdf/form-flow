@@ -87,6 +87,16 @@ const addChildBox = (parentId: string) => {
   flowData.connections.push(newConnection)
 }
 
+// Function to update box label
+const updateBoxLabel = (boxId: string, newLabel: string) => {
+  const box = flowData.boxes.find(box => box.id === boxId)
+  if (box) {
+    box.label = newLabel
+    // Print the updated flow data to console
+    console.log('Updated FlowData:', JSON.stringify(flowData, null, 2))
+  }
+}
+
 // Computed property for valid connections (both refs exist)
 const validConnections = computed(() => {
   return flowData.connections.filter(connection =>
@@ -102,10 +112,11 @@ const validConnections = computed(() => {
     :key="box.id"
     :ref="(el) => setBoxRef(box.id, el)"
     :id="box.id"
+    :label="box.label"
     :initialPosition="box.position"
     @add-child="addChildBox"
+    @update-label="updateBoxLabel"
   >
-    {{ box.label }}
   </DraggableBox>
 
   <!-- Render connections dynamically -->
