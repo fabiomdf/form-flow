@@ -69,9 +69,8 @@ const { isEditing, tempLabel, inputRef, startEditing, saveLabel, handleKeydown }
 
 // Event handlers
 const handleBoxClick = () => {
-  if (props.highlightSelected) {
-    emit('selectBox', props.id)
-  }
+  // Always emit selection event, regardless of highlight setting
+  emit('selectBox', props.id)
 }
 
 const handleDragStart = (event: MouseEvent) => {

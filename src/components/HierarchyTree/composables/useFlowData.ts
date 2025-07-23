@@ -171,9 +171,7 @@ export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
 
   // Function to select a box
   const selectBox = (boxId: string | null) => {
-    if (options.highlightSelectedBox) {
-      selectedBoxId.value = boxId
-    }
+    selectedBoxId.value = boxId
   }
 
   // Computed property for valid connections
