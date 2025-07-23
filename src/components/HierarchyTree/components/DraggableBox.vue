@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue'
+import { ref, defineExpose, computed } from 'vue'
 import AddNewDraggableBox from './AddNewDraggableBox.vue'
 import RemoveDraggableBox from '../components/RemoveDraggableBox.vue'
 import { useDrag } from '@/components/HierarchyTree/composables/useDrag'
 import { useLabelEdit } from '@/components/HierarchyTree/composables/useLabelEdit'
-import type { Position } from '@/components/HierarchyTree/types/flow'
+import type { Position, BoxSize } from '@/components/HierarchyTree/types/flow'
 
 const props = defineProps<{
   initialPosition?: Position
+  size?: BoxSize
   id: string
   label: string
   showAddButton?: boolean
@@ -23,6 +24,15 @@ const emit = defineEmits<{
 }>()
 
 const boxRef = ref<HTMLElement | null>(null)
+
+// Default box dimensions
+const DEFAULT_BOX_SIZE = { width: 150, height: 100 }
+
+// Use the size from props or defaults
+const boxSize = computed(() => ({
+  width: props.size?.width ?? DEFAULT_BOX_SIZE.width,
+  height: props.size?.height ?? DEFAULT_BOX_SIZE.height
+}))
 
 // Drag functionality
 const { position, startDrag } = useDrag(
@@ -68,7 +78,12 @@ defineExpose({ boxRef })
 <template>
   <div
     class="draggable-box"
-    :style="{ top: position.y + 'px', left: position.x + 'px' }"
+    :style="{
+      top: position.y + 'px',
+      left: position.x + 'px',
+      width: boxSize.width + 'px',
+      height: boxSize.height + 'px'
+    }"
     @mousedown="handleDragStart"
     @dblclick="handleDoubleClick"
     ref="boxRef"

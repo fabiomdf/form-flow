@@ -9,10 +9,22 @@ const props = withDefaults(defineProps<{
   showAddButton?: boolean
   showRemoveButton?: boolean
   allowLabelEdit?: boolean
+  boxWidth?: number
+  boxHeight?: number
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
-  allowLabelEdit: true
+  allowLabelEdit: true,
+  boxWidth: 150,
+  boxHeight: 100
+})
+
+import type { BoxData } from '@/components/HierarchyTree/types/flow'
+
+// Function to get final box size (individual size or default from props)
+const getBoxSize = (box: BoxData) => ({
+  width: box.size?.width ?? props.boxWidth,
+  height: box.size?.height ?? props.boxHeight
 })
 
 const {
@@ -36,6 +48,7 @@ const {
     :id="box.id"
     :label="box.label"
     :initialPosition="box.position"
+    :size="getBoxSize(box)"
     :show-add-button="props.showAddButton"
     :show-remove-button="props.showRemoveButton"
     :allow-label-edit="props.allowLabelEdit"

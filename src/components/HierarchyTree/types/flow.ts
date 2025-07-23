@@ -3,10 +3,16 @@ export interface Position {
   y: number
 }
 
+export interface BoxSize {
+  width: number
+  height: number
+}
+
 export interface BoxData {
   id: string
   label: string
   position: Position
+  size?: BoxSize // Opcional, usará valores padrão se não fornecido
 }
 
 export interface ConnectionData {
@@ -28,4 +34,6 @@ export interface HierarchyTreeProps {
   showAddButton?: boolean
   showRemoveButton?: boolean
   allowLabelEdit?: boolean
+  boxWidth?: number
+  boxHeight?: number
 }

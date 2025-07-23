@@ -25,5 +25,7 @@ const initialFlowData: FlowData = {
     :show-add-button="true"
     :show-remove-button="true"
     :allow-label-edit="true"
+    :box-width="200"
+    :box-height="120"
   />
 </template>
