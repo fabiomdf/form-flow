@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineExpose, computed } from 'vue'
+import { ref, defineExpose, computed, toRef } from 'vue'
 import AddNewDraggableBox from './AddNewDraggableBox.vue'
 import RemoveDraggableBox from '../components/RemoveDraggableBox.vue'
 import { useDrag } from '@/components/HierarchyTree/composables/useDrag'
@@ -63,7 +63,7 @@ const { position, startDrag } = useDrag(
 
 // Label editing functionality
 const { isEditing, tempLabel, inputRef, startEditing, saveLabel, handleKeydown } = useLabelEdit(
-  props.label,
+  toRef(props, 'label'),
   (newLabel) => emit('updateLabel', props.id, newLabel)
 )
 

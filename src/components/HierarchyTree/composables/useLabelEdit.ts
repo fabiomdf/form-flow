@@ -1,16 +1,24 @@
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch, type Ref } from 'vue'
 
 export function useLabelEdit(
-  initialLabel: string,
+  initialLabel: string | Ref<string>,
   onSave: (newLabel: string) => void
 ) {
+  const labelRef = typeof initialLabel === 'string' ? ref(initialLabel) : initialLabel
   const isEditing = ref(false)
-  const tempLabel = ref(initialLabel)
+  const tempLabel = ref(labelRef.value)
   const inputRef = ref<HTMLInputElement | null>(null)
+
+  // Watch for changes in the label prop and update tempLabel when not editing
+  watch(labelRef, (newLabel) => {
+    if (!isEditing.value) {
+      tempLabel.value = newLabel
+    }
+  })
 
   const startEditing = async () => {
     isEditing.value = true
-    tempLabel.value = initialLabel
+    tempLabel.value = labelRef.value // Always use the current label value
 
     await nextTick()
     if (inputRef.value) {
@@ -21,14 +29,14 @@ export function useLabelEdit(
 
   const saveLabel = () => {
     const trimmedLabel = tempLabel.value.trim()
-    if (trimmedLabel !== initialLabel && trimmedLabel !== '') {
+    if (trimmedLabel !== labelRef.value && trimmedLabel !== '') {
       onSave(trimmedLabel)
     }
     isEditing.value = false
   }
 
   const cancelEditing = () => {
-    tempLabel.value = initialLabel
+    tempLabel.value = labelRef.value
     isEditing.value = false
   }
 
