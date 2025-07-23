@@ -36,4 +36,5 @@ export interface HierarchyTreeProps {
   allowLabelEdit?: boolean
   boxWidth?: number
   boxHeight?: number
+  enableShadow?: boolean
 }

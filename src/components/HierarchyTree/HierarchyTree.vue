@@ -11,12 +11,14 @@ const props = withDefaults(defineProps<{
   allowLabelEdit?: boolean
   boxWidth?: number
   boxHeight?: number
+  enableShadow?: boolean
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
   allowLabelEdit: true,
   boxWidth: 150,
-  boxHeight: 100
+  boxHeight: 100,
+  enableShadow: true
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -52,6 +54,7 @@ const {
     :show-add-button="props.showAddButton"
     :show-remove-button="props.showRemoveButton"
     :allow-label-edit="props.allowLabelEdit"
+    :enable-shadow="props.enableShadow"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"

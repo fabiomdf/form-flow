@@ -27,5 +27,6 @@ const initialFlowData: FlowData = {
     :allow-label-edit="true"
     :box-width="200"
     :box-height="120"
+    :enable-shadow="true"
   />
 </template>

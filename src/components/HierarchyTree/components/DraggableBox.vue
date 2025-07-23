@@ -14,6 +14,7 @@ const props = defineProps<{
   showAddButton?: boolean
   showRemoveButton?: boolean
   allowLabelEdit?: boolean
+  enableShadow?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -78,6 +79,7 @@ defineExpose({ boxRef })
 <template>
   <div
     class="draggable-box"
+    :class="{ 'with-shadow': props.enableShadow }"
     :style="{
       top: position.y + 'px',
       left: position.x + 'px',
@@ -131,6 +133,11 @@ defineExpose({ boxRef })
     border-radius: 8px;
     user-select: none;
     z-index: 10;
+}
+
+.draggable-box.with-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+                0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .box-content {
