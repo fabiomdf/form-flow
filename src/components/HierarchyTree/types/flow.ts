@@ -41,4 +41,14 @@ export interface HierarchyTreeProps {
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  addButtonBackgroundColor?: string
+  addButtonBorderColor?: string
+  addButtonContent?: string
+  addButtonSize?: number
+  addButtonShape?: 'circle' | 'square' | 'rounded'
+  removeButtonBackgroundColor?: string
+  removeButtonBorderColor?: string
+  removeButtonContent?: string
+  removeButtonSize?: number
+  removeButtonShape?: 'circle' | 'square' | 'rounded'
 }

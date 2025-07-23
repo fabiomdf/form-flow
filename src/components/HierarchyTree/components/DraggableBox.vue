@@ -19,6 +19,16 @@ const props = defineProps<{
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  addButtonBackgroundColor?: string
+  addButtonBorderColor?: string
+  addButtonContent?: string
+  addButtonSize?: number
+  addButtonShape?: 'circle' | 'square' | 'rounded'
+  removeButtonBackgroundColor?: string
+  removeButtonBorderColor?: string
+  removeButtonContent?: string
+  removeButtonSize?: number
+  removeButtonShape?: 'circle' | 'square' | 'rounded'
 }>()
 
 const emit = defineEmits<{
@@ -119,11 +129,21 @@ defineExpose({ boxRef })
     <AddNewDraggableBox
       v-if="props.showAddButton"
       :parent-id="id"
+      :background-color="props.addButtonBackgroundColor"
+      :border-color="props.addButtonBorderColor"
+      :content="props.addButtonContent"
+      :size="props.addButtonSize"
+      :shape="props.addButtonShape"
       @add-child="handleAddChild"
     />
     <RemoveDraggableBox
       v-if="props.showRemoveButton"
       :box-id="id"
+      :background-color="props.removeButtonBackgroundColor"
+      :border-color="props.removeButtonBorderColor"
+      :content="props.removeButtonContent"
+      :size="props.removeButtonSize"
+      :shape="props.removeButtonShape"
       @remove-box="handleRemoveBox"
     />
   </div>

@@ -32,5 +32,15 @@ const initialFlowData: FlowData = {
     box-label-color="#ecf0f1"
     edit-field-border-color="#FFFFFF"
     edit-field-background-color="rgba(255, 255, 255, 0.10)"
+    add-button-background-color="#27ae60"
+    add-button-border-color="#ffffff"
+    add-button-content="+"
+    :add-button-size="31"
+    add-button-shape="circle"
+    remove-button-background-color="#e74c3c"
+    remove-button-border-color="#ffffff"
+    remove-button-content="✕"
+    :remove-button-size="32"
+    remove-button-shape="square"
   />
 </template>

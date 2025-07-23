@@ -3,6 +3,11 @@ import ActionButton from './ActionButton.vue'
 
 const props = defineProps<{
   parentId: string
+  backgroundColor?: string
+  borderColor?: string
+  content?: string
+  size?: number
+  shape?: 'circle' | 'square' | 'rounded'
 }>()
 
 const emit = defineEmits<{
@@ -18,9 +23,12 @@ const handleAddChild = () => {
   <ActionButton
     title="Add Child Box"
     position="bottom"
-    color="green"
+    :backgroundColor="props.backgroundColor || '#4CAF50'"
+    :borderColor="props.borderColor || 'white'"
+    :size="props.size || 30"
+    :shape="props.shape || 'circle'"
     :onClick="handleAddChild"
   >
-    +
+    {{ props.content || '+' }}
   </ActionButton>
 </template>

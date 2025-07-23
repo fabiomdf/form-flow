@@ -2,7 +2,10 @@
 interface Props {
   title: string
   position: 'top' | 'bottom'
-  color: 'green' | 'red'
+  backgroundColor?: string
+  borderColor?: string
+  size?: number
+  shape?: 'circle' | 'square' | 'rounded'
   onClick: (event: MouseEvent) => void
 }
 
@@ -16,7 +19,14 @@ const handleClick = (event: MouseEvent) => {
 
 <template>
   <button
-    :class="['action-button', `action-button--${position}`, `action-button--${color}`]"
+    :class="['action-button', `action-button--${position}`, `action-button--${props.shape || 'circle'}`]"
+    :style="{
+      backgroundColor: props.backgroundColor || '#4CAF50',
+      borderColor: props.borderColor || 'white',
+      width: (props.size || 30) + 'px',
+      height: (props.size || 30) + 'px',
+      fontSize: Math.floor((props.size || 30) * 0.6) + 'px'
+    }"
     @mousedown="handleClick"
     :title="title"
   >
@@ -31,18 +41,28 @@ const handleClick = (event: MouseEvent) => {
   transform: translateX(-50%);
   width: 30px;
   height: 30px;
-  border-radius: 50%;
   color: white;
   border: 2px solid white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
   z-index: 20;
+}
+
+.action-button--circle {
+  border-radius: 50%;
+}
+
+.action-button--square {
+  border-radius: 0;
+}
+
+.action-button--rounded {
+  border-radius: 8px;
 }
 
 .action-button--top {
@@ -53,22 +73,9 @@ const handleClick = (event: MouseEvent) => {
   bottom: -15px;
 }
 
-.action-button--green {
-  background-color: #4CAF50;
-}
-
-.action-button--green:hover {
-  background-color: #45a049;
+.action-button:hover {
   transform: translateX(-50%) scale(1.1);
-}
-
-.action-button--red {
-  background-color: #f44336;
-}
-
-.action-button--red:hover {
-  background-color: #d32f2f;
-  transform: translateX(-50%) scale(1.1);
+  filter: brightness(1.1);
 }
 
 .action-button:active {

@@ -16,6 +16,16 @@ const props = withDefaults(defineProps<{
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  addButtonBackgroundColor?: string
+  addButtonBorderColor?: string
+  addButtonContent?: string
+  addButtonSize?: number
+  addButtonShape?: 'circle' | 'square' | 'rounded'
+  removeButtonBackgroundColor?: string
+  removeButtonBorderColor?: string
+  removeButtonContent?: string
+  removeButtonSize?: number
+  removeButtonShape?: 'circle' | 'square' | 'rounded'
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
@@ -26,7 +36,17 @@ const props = withDefaults(defineProps<{
   boxBackgroundColor: '#42b983',
   boxLabelColor: 'white',
   editFieldBorderColor: '#4CAF50',
-  editFieldBackgroundColor: 'rgba(255, 255, 255, 0.9)'
+  editFieldBackgroundColor: 'rgba(255, 255, 255, 0.9)',
+  addButtonBackgroundColor: '#4CAF50',
+  addButtonBorderColor: 'white',
+  addButtonContent: '+',
+  addButtonSize: 30,
+  addButtonShape: 'circle',
+  removeButtonBackgroundColor: '#f44336',
+  removeButtonBorderColor: 'white',
+  removeButtonContent: '×',
+  removeButtonSize: 30,
+  removeButtonShape: 'circle'
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -67,6 +87,16 @@ const {
     :box-label-color="props.boxLabelColor"
     :edit-field-border-color="props.editFieldBorderColor"
     :edit-field-background-color="props.editFieldBackgroundColor"
+    :add-button-background-color="props.addButtonBackgroundColor"
+    :add-button-border-color="props.addButtonBorderColor"
+    :add-button-content="props.addButtonContent"
+    :add-button-size="props.addButtonSize"
+    :add-button-shape="props.addButtonShape"
+    :remove-button-background-color="props.removeButtonBackgroundColor"
+    :remove-button-border-color="props.removeButtonBorderColor"
+    :remove-button-content="props.removeButtonContent"
+    :remove-button-size="props.removeButtonSize"
+    :remove-button-shape="props.removeButtonShape"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"
