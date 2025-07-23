@@ -28,6 +28,9 @@ const props = withDefaults(defineProps<{
   removeButtonShape?: 'circle' | 'square' | 'rounded'
   enableCollisionAvoidance?: boolean
   enableConsoleLog?: boolean
+  highlightSelectedBox?: boolean
+  selectedBoxBorderColor?: string
+  selectedBoxBorderWidth?: number
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
@@ -50,7 +53,10 @@ const props = withDefaults(defineProps<{
   removeButtonSize: 30,
   removeButtonShape: 'circle',
   enableCollisionAvoidance: true,
-  enableConsoleLog: false
+  enableConsoleLog: false,
+  highlightSelectedBox: true,
+  selectedBoxBorderColor: '#ffd700',
+  selectedBoxBorderWidth: 3
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -64,17 +70,20 @@ const getBoxSize = (box: BoxData) => ({
 const {
   flowData,
   boxRefs,
+  selectedBoxId,
   setBoxRef,
   addChildBox,
   updateBoxLabel,
   updateBoxPosition,
   removeBox,
+  selectBox,
   validConnections
 } = useFlowData(props.initialData, {
   boxWidth: props.boxWidth,
   boxHeight: props.boxHeight,
   enableCollisionAvoidance: props.enableCollisionAvoidance,
-  enableConsoleLog: props.enableConsoleLog
+  enableConsoleLog: props.enableConsoleLog,
+  highlightSelectedBox: props.highlightSelectedBox
 })
 </script>
 
@@ -106,10 +115,15 @@ const {
     :remove-button-content="props.removeButtonContent"
     :remove-button-size="props.removeButtonSize"
     :remove-button-shape="props.removeButtonShape"
+    :is-selected="selectedBoxId === box.id"
+    :highlight-selected="props.highlightSelectedBox"
+    :selected-border-color="props.selectedBoxBorderColor"
+    :selected-border-width="props.selectedBoxBorderWidth"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"
     @remove-box="removeBox"
+    @select-box="selectBox"
   >
   </DraggableBox>
 

@@ -53,4 +53,7 @@ export interface HierarchyTreeProps {
   removeButtonShape?: 'circle' | 'square' | 'rounded'
   enableCollisionAvoidance?: boolean
   enableConsoleLog?: boolean
+  highlightSelectedBox?: boolean
+  selectedBoxBorderColor?: string
+  selectedBoxBorderWidth?: number
 }

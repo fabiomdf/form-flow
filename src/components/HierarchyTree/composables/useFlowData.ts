@@ -6,6 +6,7 @@ interface FlowDataOptions {
   boxHeight: number
   enableCollisionAvoidance: boolean
   enableConsoleLog: boolean
+  highlightSelectedBox: boolean
 }
 
 export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
@@ -18,6 +19,9 @@ export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
   // Store references to box components
   const boxRefs = reactive<Record<string, BoxElement>>({})
   const nextId = ref(1)
+
+  // Selection state
+  const selectedBoxId = ref<string | null>(null)
 
   // Function to set box reference
   const setBoxRef = (id: string, el: unknown) => {
@@ -165,6 +169,13 @@ export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
     }
   }
 
+  // Function to select a box
+  const selectBox = (boxId: string | null) => {
+    if (options.highlightSelectedBox) {
+      selectedBoxId.value = boxId
+    }
+  }
+
   // Computed property for valid connections
   const validConnections = computed(() => {
     return flowData.connections.filter(connection =>
@@ -175,11 +186,13 @@ export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
   return {
     flowData,
     boxRefs,
+    selectedBoxId,
     setBoxRef,
     addChildBox,
     updateBoxLabel,
     updateBoxPosition,
     removeBox,
+    selectBox,
     validConnections
   }
 }

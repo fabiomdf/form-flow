@@ -29,6 +29,10 @@ const props = defineProps<{
   removeButtonContent?: string
   removeButtonSize?: number
   removeButtonShape?: 'circle' | 'square' | 'rounded'
+  isSelected?: boolean
+  highlightSelected?: boolean
+  selectedBorderColor?: string
+  selectedBorderWidth?: number
 }>()
 
 const emit = defineEmits<{
@@ -36,6 +40,7 @@ const emit = defineEmits<{
   updateLabel: [id: string, newLabel: string]
   updatePosition: [id: string, position: Position]
   removeBox: [boxId: string]
+  selectBox: [boxId: string]
 }>()
 
 const boxRef = ref<HTMLElement | null>(null)
@@ -62,8 +67,15 @@ const { isEditing, tempLabel, inputRef, startEditing, saveLabel, handleKeydown }
 )
 
 // Event handlers
+const handleBoxClick = () => {
+  if (props.highlightSelected) {
+    emit('selectBox', props.id)
+  }
+}
+
 const handleDragStart = (event: MouseEvent) => {
   if (!isEditing.value) {
+    handleBoxClick()
     startDrag(event)
   }
 }
@@ -93,17 +105,24 @@ defineExpose({ boxRef })
 <template>
   <div
     class="draggable-box"
-    :class="{ 'with-shadow': props.enableShadow }"
+    :class="{
+      'with-shadow': props.enableShadow,
+      'selected': props.isSelected && props.highlightSelected
+    }"
     :style="{
       top: position.y + 'px',
       left: position.x + 'px',
       width: boxSize.width + 'px',
       height: boxSize.height + 'px',
       backgroundColor: props.boxBackgroundColor || '#42b983',
-      color: props.boxLabelColor || 'white'
+      color: props.boxLabelColor || 'white',
+      border: props.isSelected && props.highlightSelected
+        ? `${props.selectedBorderWidth || 3}px solid ${props.selectedBorderColor || '#ffd700'}`
+        : 'none'
     }"
     @mousedown="handleDragStart"
     @dblclick="handleDoubleClick"
+    @click="handleBoxClick"
     ref="boxRef"
   >
     <div
@@ -166,6 +185,18 @@ defineExpose({ boxRef })
 .draggable-box.with-shadow {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
                 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.draggable-box.selected {
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+    transform: scale(1.02);
+    transition: all 0.2s ease;
+}
+
+.draggable-box.selected.with-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2),
+                0 6px 20px rgba(0, 0, 0, 0.15),
+                0 0 0 3px rgba(255, 215, 0, 0.3);
 }
 
 .box-content {
