@@ -15,6 +15,10 @@ const handleClick = (event: MouseEvent) => {
   event.stopPropagation()
   props.onClick(event)
 }
+
+const handleStopPropagation = (event: MouseEvent) => {
+  event.stopPropagation()
+}
 </script>
 
 <template>
@@ -28,6 +32,7 @@ const handleClick = (event: MouseEvent) => {
       fontSize: Math.floor((props.size || 30) * 0.6) + 'px'
     }"
     @mousedown="handleClick"
+    @click="handleStopPropagation"
     :title="title"
   >
     <slot />

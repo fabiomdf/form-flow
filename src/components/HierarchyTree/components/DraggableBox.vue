@@ -68,20 +68,33 @@ const { isEditing, tempLabel, inputRef, startEditing, saveLabel, handleKeydown }
 )
 
 // Event handlers
-const handleBoxClick = () => {
+const handleBoxClick = (event: MouseEvent) => {
+  // Prevent selection if the target is a button or inside a button
+  const target = event.target as HTMLElement
+  if (target && (target.tagName === 'BUTTON' || target.closest('button'))) {
+    return
+  }
+
   // Always emit selection event, regardless of highlight setting
   emit('selectBox', props.id)
 }
 
 const handleDragStart = (event: MouseEvent) => {
   if (!isEditing.value) {
-    handleBoxClick()
+    handleBoxClick(event)
     startDrag(event)
   }
 }
 
 const handleDoubleClick = (event: MouseEvent) => {
   event.stopPropagation()
+
+  // Prevent double-click editing if the target is a button or inside a button
+  const target = event.target as HTMLElement
+  if (target && (target.tagName === 'BUTTON' || target.closest('button'))) {
+    return
+  }
+
   if (props.allowLabelEdit) {
     startEditing()
   }
