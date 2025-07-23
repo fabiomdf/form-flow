@@ -1,5 +1,5 @@
 import { reactive, ref, computed } from 'vue'
-import type { FlowData, BoxData, BoxElement } from '@/types/flow'
+import type { FlowData, BoxData, BoxElement } from '@/components/HierarchyTree/types/flow'
 
 export function useFlowData(initialData: FlowData) {
   // Make flowData reactive by copying the initial data

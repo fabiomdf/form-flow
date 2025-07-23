@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import DraggableBox from './HierarchyTreeParts/DraggableBox.vue'
-import ConnectionLine from './HierarchyTreeParts/ConnectionLine.vue'
-import { useFlowData } from '@/composables/useFlowData'
-import type { FlowData } from '@/types/flow'
+import DraggableBox from './components/DraggableBox.vue'
+import ConnectionLine from './components/ConnectionLine.vue'
+import { useFlowData } from '@/components/HierarchyTree/composables/useFlowData'
+import type { FlowData } from '@/components/HierarchyTree/types/flow'
 
 const props = defineProps<{
   initialData: FlowData

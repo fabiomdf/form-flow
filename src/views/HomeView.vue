@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HierarchyTree from '@/components/HierarchyTree/HierarchyTree.vue'
-import type { FlowData } from '@/types/flow'
+import type { FlowData } from '@/components/HierarchyTree/types/flow'
 
 // JSON representation of the flow
 const initialFlowData: FlowData = {

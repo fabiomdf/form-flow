@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { BoxElement } from '@/types/flow'
+import type { BoxElement } from '@/components/HierarchyTree/types/flow'
 
 const props = defineProps<{
     start: BoxElement

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, defineExpose } from 'vue'
 import AddNewDraggableBox from './AddNewDraggableBox.vue'
-import RemoveDraggableBox from './RemoveDraggableBox.vue'
-import { useDrag } from '@/composables/useDrag'
-import { useLabelEdit } from '@/composables/useLabelEdit'
-import type { Position } from '@/types/flow'
+import RemoveDraggableBox from '../components/RemoveDraggableBox.vue'
+import { useDrag } from '@/components/HierarchyTree/composables/useDrag'
+import { useLabelEdit } from '@/components/HierarchyTree/composables/useLabelEdit'
+import type { Position } from '@/components/HierarchyTree/types/flow'
 
 const props = defineProps<{
   initialPosition?: Position

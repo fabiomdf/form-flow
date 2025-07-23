@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import type { Position } from '@/types/flow'
+import type { Position } from '@/components/HierarchyTree/types/flow'
 
 export function useDrag(
   initialPosition: Position,
