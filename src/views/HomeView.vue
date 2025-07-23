@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HierarchyTree from '@/components/HierarchyTree.vue'
+import HierarchyTree from '@/components/HierarchyTree/HierarchyTree.vue'
 
 interface BoxData {
   id: string

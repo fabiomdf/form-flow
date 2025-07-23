@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, computed } from 'vue'
-import DraggableBox from './DraggableBox.vue'
-import ConnectionLine from './ConnectionLine.vue'
+import DraggableBox from '@/components/HierarchyTree/HierarchyTreeParts/DraggableBox.vue'
+import ConnectionLine from '@/components/HierarchyTree/HierarchyTreeParts/ConnectionLine.vue'
 
 interface BoxData {
   id: string
@@ -113,13 +113,13 @@ const getAllDescendants = (boxId: string): string[] => {
   const directChildren = flowData.connections
     .filter(conn => conn.start === boxId)
     .map(conn => conn.end)
-  
+
   for (const childId of directChildren) {
     descendants.push(childId)
     // Recursively get descendants of this child
     descendants.push(...getAllDescendants(childId))
   }
-  
+
   return descendants
 }
 
@@ -128,23 +128,23 @@ const removeBox = (boxId: string) => {
   // Get all descendants before removing anything
   const descendantsToRemove = getAllDescendants(boxId)
   const allBoxesToRemove = [boxId, ...descendantsToRemove]
-  
+
   // Remove all connections involving any of the boxes to be removed
-  flowData.connections = flowData.connections.filter(connection => 
-    !allBoxesToRemove.includes(connection.start) && 
+  flowData.connections = flowData.connections.filter(connection =>
+    !allBoxesToRemove.includes(connection.start) &&
     !allBoxesToRemove.includes(connection.end)
   )
-  
+
   // Remove all boxes
-  flowData.boxes = flowData.boxes.filter(box => 
+  flowData.boxes = flowData.boxes.filter(box =>
     !allBoxesToRemove.includes(box.id)
   )
-  
+
   // Clean up box references
   allBoxesToRemove.forEach(id => {
     delete boxRefs[id]
   })
-  
+
   // Print the updated flow data to console
   console.log('Updated FlowData after removal:', JSON.stringify(flowData, null, 2))
 }
