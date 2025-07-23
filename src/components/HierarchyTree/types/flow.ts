@@ -51,4 +51,5 @@ export interface HierarchyTreeProps {
   removeButtonContent?: string
   removeButtonSize?: number
   removeButtonShape?: 'circle' | 'square' | 'rounded'
+  enableCollisionAvoidance?: boolean
 }

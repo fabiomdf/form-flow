@@ -1,7 +1,13 @@
 import { reactive, ref, computed } from 'vue'
-import type { FlowData, BoxData, BoxElement } from '@/components/HierarchyTree/types/flow'
+import type { FlowData, BoxData, BoxElement, Position } from '@/components/HierarchyTree/types/flow'
 
-export function useFlowData(initialData: FlowData) {
+interface FlowDataOptions {
+  boxWidth: number
+  boxHeight: number
+  enableCollisionAvoidance: boolean
+}
+
+export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
   // Make flowData reactive by copying the initial data
   const flowData: FlowData = reactive({
     boxes: [...initialData.boxes],
@@ -24,16 +30,60 @@ export function useFlowData(initialData: FlowData) {
     return `box_${Date.now()}_${nextId.value++}`
   }
 
+  // Function to check if two boxes collide
+  const checkCollision = (pos1: Position, pos2: Position): boolean => {
+    const buffer = 20 // Buffer space between boxes
+    return Math.abs(pos1.x - pos2.x) < options.boxWidth + buffer &&
+           Math.abs(pos1.y - pos2.y) < options.boxHeight + buffer
+  }
+
+  // Function to find a position without collision
+  const findPositionWithoutCollision = (basePosition: Position): Position => {
+    if (!options.enableCollisionAvoidance) {
+      return basePosition
+    }
+
+    let position = { ...basePosition }
+    let attempts = 0
+    const maxAttempts = 50
+    const step = 50
+
+    while (attempts < maxAttempts) {
+      const hasCollision = flowData.boxes.some(box =>
+        checkCollision(position, box.position)
+      )
+
+      if (!hasCollision) {
+        return position
+      }
+
+      // Try different positions in a spiral pattern
+      const angle = (attempts * 45) % 360
+      const radius = Math.floor(attempts / 8) * step + step
+
+      position = {
+        x: basePosition.x + Math.cos(angle * Math.PI / 180) * radius,
+        y: basePosition.y + Math.sin(angle * Math.PI / 180) * radius
+      }
+
+      attempts++
+    }
+
+    return position // Return last position if no collision-free spot found
+  }
+
   // Function to calculate position for new child box
-  const calculateChildPosition = (parentId: string) => {
+  const calculateChildPosition = (parentId: string): Position => {
     const parent = flowData.boxes.find(box => box.id === parentId)
     if (!parent) return { x: 100, y: 100 }
 
     const childrenCount = flowData.connections.filter(conn => conn.start === parentId).length
-    return {
+    const basePosition = {
       x: parent.position.x + (childrenCount * 180) - 90,
       y: parent.position.y + 150
     }
+
+    return findPositionWithoutCollision(basePosition)
   }
 
   // Function to get all descendant box IDs recursively

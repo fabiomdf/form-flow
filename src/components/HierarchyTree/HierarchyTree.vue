@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<{
   removeButtonContent?: string
   removeButtonSize?: number
   removeButtonShape?: 'circle' | 'square' | 'rounded'
+  enableCollisionAvoidance?: boolean
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
@@ -46,7 +47,8 @@ const props = withDefaults(defineProps<{
   removeButtonBorderColor: 'white',
   removeButtonContent: '×',
   removeButtonSize: 30,
-  removeButtonShape: 'circle'
+  removeButtonShape: 'circle',
+  enableCollisionAvoidance: true
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -66,7 +68,11 @@ const {
   updateBoxPosition,
   removeBox,
   validConnections
-} = useFlowData(props.initialData)
+} = useFlowData(props.initialData, {
+  boxWidth: props.boxWidth,
+  boxHeight: props.boxHeight,
+  enableCollisionAvoidance: props.enableCollisionAvoidance
+})
 </script>
 
 <template>
