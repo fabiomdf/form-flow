@@ -102,6 +102,11 @@ const shouldShowButtons = (boxId: string, buttonType: 'add' | 'remove') => {
 
   return true
 }
+
+// Expose flowData to parent component
+defineExpose({
+  flowData
+})
 </script>
 
 <template>
