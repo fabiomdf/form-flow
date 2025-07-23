@@ -12,6 +12,7 @@ const props = defineProps<{
   label: string
   showAddButton?: boolean
   showRemoveButton?: boolean
+  allowLabelEdit?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -44,7 +45,9 @@ const handleDragStart = (event: MouseEvent) => {
 
 const handleDoubleClick = (event: MouseEvent) => {
   event.stopPropagation()
-  startEditing()
+  if (props.allowLabelEdit) {
+    startEditing()
+  }
 }
 
 const handleInputClick = (event: MouseEvent) => {
@@ -70,11 +73,15 @@ defineExpose({ boxRef })
     @dblclick="handleDoubleClick"
     ref="boxRef"
   >
-    <div v-if="!isEditing" class="box-content">
+    <div
+      v-if="!isEditing || !props.allowLabelEdit"
+      class="box-content"
+      :class="{ 'non-editable': !props.allowLabelEdit }"
+    >
       {{ props.label }}
     </div>
     <input
-      v-else
+      v-else-if="props.allowLabelEdit"
       ref="inputRef"
       v-model="tempLabel"
       class="label-input"
@@ -115,6 +122,11 @@ defineExpose({ boxRef })
     text-align: center;
     word-wrap: break-word;
     max-width: 130px;
+}
+
+.box-content.non-editable {
+    cursor: default;
+    opacity: 0.9;
 }
 
 .label-input {

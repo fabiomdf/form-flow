@@ -8,9 +8,11 @@ const props = withDefaults(defineProps<{
   initialData: FlowData
   showAddButton?: boolean
   showRemoveButton?: boolean
+  allowLabelEdit?: boolean
 }>(), {
   showAddButton: true,
-  showRemoveButton: true
+  showRemoveButton: true,
+  allowLabelEdit: true
 })
 
 const {
@@ -36,6 +38,7 @@ const {
     :initialPosition="box.position"
     :show-add-button="props.showAddButton"
     :show-remove-button="props.showRemoveButton"
+    :allow-label-edit="props.allowLabelEdit"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"

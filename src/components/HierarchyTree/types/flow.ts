@@ -27,4 +27,5 @@ export interface HierarchyTreeProps {
   initialData: FlowData
   showAddButton?: boolean
   showRemoveButton?: boolean
+  allowLabelEdit?: boolean
 }
