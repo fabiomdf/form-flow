@@ -31,6 +31,7 @@ const initialFlowData: FlowData = {
     box-label-color="#ecf0f1"
     edit-field-border-color="#FFFFFF"
     edit-field-background-color="rgba(255, 255, 255, 0.10)"
+    edit-field-text-color="#ffffff"
     add-button-background-color="#27ae60"
     add-button-border-color="#ffffff"
     add-button-content="+"

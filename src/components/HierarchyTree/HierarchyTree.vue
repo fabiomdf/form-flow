@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  editFieldTextColor?: string
   addButtonBackgroundColor?: string
   addButtonBorderColor?: string
   addButtonContent?: string
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<{
   boxLabelColor: 'white',
   editFieldBorderColor: '#4CAF50',
   editFieldBackgroundColor: 'rgba(255, 255, 255, 0.9)',
+  editFieldTextColor: '#333',
   addButtonBackgroundColor: '#4CAF50',
   addButtonBorderColor: 'white',
   addButtonContent: '+',
@@ -120,6 +122,7 @@ const shouldShowButtons = (boxId: string, buttonType: 'add' | 'remove') => {
     :box-label-color="props.boxLabelColor"
     :edit-field-border-color="props.editFieldBorderColor"
     :edit-field-background-color="props.editFieldBackgroundColor"
+    :edit-field-text-color="props.editFieldTextColor"
     :add-button-background-color="props.addButtonBackgroundColor"
     :add-button-border-color="props.addButtonBorderColor"
     :add-button-content="props.addButtonContent"

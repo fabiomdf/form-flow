@@ -19,6 +19,7 @@ const props = defineProps<{
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  editFieldTextColor?: string
   addButtonBackgroundColor?: string
   addButtonBorderColor?: string
   addButtonContent?: string
@@ -139,7 +140,8 @@ defineExpose({ boxRef })
       class="label-input"
       :style="{
         backgroundColor: props.editFieldBackgroundColor || 'rgba(255, 255, 255, 0.9)',
-        borderColor: props.editFieldBorderColor || '#4CAF50'
+        borderColor: props.editFieldBorderColor || '#4CAF50',
+        color: props.editFieldTextColor || '#333'
       }"
       @keydown="handleKeydown"
       @blur="saveLabel"
@@ -211,7 +213,6 @@ defineExpose({ boxRef })
 }
 
 .label-input {
-    color: #333;
     border: 2px solid;
     border-radius: 4px;
     padding: 4px 8px;

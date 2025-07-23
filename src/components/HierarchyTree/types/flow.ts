@@ -41,6 +41,7 @@ export interface HierarchyTreeProps {
   boxLabelColor?: string
   editFieldBorderColor?: string
   editFieldBackgroundColor?: string
+  editFieldTextColor?: string
   addButtonBackgroundColor?: string
   addButtonBorderColor?: string
   addButtonContent?: string
