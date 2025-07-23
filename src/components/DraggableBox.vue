@@ -16,6 +16,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   addChild: [parentId: string]
   updateLabel: [id: string, newLabel: string]
+  updatePosition: [id: string, position: Position]
 }>()
 
 const position = ref<Position>(props.initialPosition || { x: 100, y: 100 })
@@ -52,6 +53,9 @@ const stopDrag = () => {
     dragging.value = false
     window.removeEventListener('mousemove', onDrag)
     window.removeEventListener('mouseup', stopDrag)
+    
+    // Emit position update when dragging stops
+    emit('updatePosition', props.id, position.value)
 }
 
 const handleAddChild = (parentId: string) => {
