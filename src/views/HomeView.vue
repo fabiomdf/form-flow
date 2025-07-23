@@ -24,6 +24,7 @@ const initialFlowData: FlowData = {
     :enable-collision-avoidance="true"
     :enable-console-log="false"
     :highlight-selected-box="true"
+    :show-buttons-only-on-selected="true"
     selected-box-border-color="#ff6b6b"
     :selected-box-border-width="4"
     box-background-color="#2c3e50"

@@ -56,4 +56,5 @@ export interface HierarchyTreeProps {
   highlightSelectedBox?: boolean
   selectedBoxBorderColor?: string
   selectedBoxBorderWidth?: number
+  showButtonsOnlyOnSelected?: boolean
 }

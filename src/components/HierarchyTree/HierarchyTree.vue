@@ -31,6 +31,7 @@ const props = withDefaults(defineProps<{
   highlightSelectedBox?: boolean
   selectedBoxBorderColor?: string
   selectedBoxBorderWidth?: number
+  showButtonsOnlyOnSelected?: boolean
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
@@ -56,7 +57,8 @@ const props = withDefaults(defineProps<{
   enableConsoleLog: false,
   highlightSelectedBox: true,
   selectedBoxBorderColor: '#ffd700',
-  selectedBoxBorderWidth: 3
+  selectedBoxBorderWidth: 3,
+  showButtonsOnlyOnSelected: false
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -85,6 +87,19 @@ const {
   enableConsoleLog: props.enableConsoleLog,
   highlightSelectedBox: props.highlightSelectedBox
 })
+
+// Function to determine if buttons should be shown for a specific box
+const shouldShowButtons = (boxId: string, buttonType: 'add' | 'remove') => {
+  const baseVisibility = buttonType === 'add' ? props.showAddButton : props.showRemoveButton
+
+  if (!baseVisibility) return false
+
+  if (props.showButtonsOnlyOnSelected) {
+    return selectedBoxId.value === boxId
+  }
+
+  return true
+}
 </script>
 
 <template>
@@ -97,8 +112,8 @@ const {
     :label="box.label"
     :initialPosition="box.position"
     :size="getBoxSize(box)"
-    :show-add-button="props.showAddButton"
-    :show-remove-button="props.showRemoveButton"
+    :show-add-button="shouldShowButtons(box.id, 'add')"
+    :show-remove-button="shouldShowButtons(box.id, 'remove')"
     :allow-label-edit="props.allowLabelEdit"
     :enable-shadow="props.enableShadow"
     :box-background-color="props.boxBackgroundColor"
