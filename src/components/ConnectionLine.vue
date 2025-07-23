@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+interface BoxElement {
+  boxRef: HTMLElement
+}
+
 const props = defineProps<{
-    start: any
-    end: any
+    start: BoxElement
+    end: BoxElement
 }>()
 
 const startPoint = ref<{ x: number; y: number } | null>(null)

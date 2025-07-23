@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed } from 'vue'
 import DraggableBox from './DraggableBox.vue'
 import ConnectionLine from './ConnectionLine.vue'
 
@@ -19,6 +19,10 @@ interface FlowData {
   connections: ConnectionData[]
 }
 
+interface BoxElement {
+  boxRef: HTMLElement
+}
+
 const props = defineProps<{
   initialData: FlowData
 }>()
@@ -30,13 +34,13 @@ const flowData: FlowData = reactive({
 })
 
 // Store references to box components
-const boxRefs = reactive<Record<string, unknown>>({})
+const boxRefs = reactive<Record<string, BoxElement>>({})
 const nextId = ref(1)
 
 // Function to set box reference
 const setBoxRef = (id: string, el: unknown) => {
-  if (el) {
-    boxRefs[id] = el
+  if (el && typeof el === 'object' && 'boxRef' in el) {
+    boxRefs[id] = el as BoxElement
   }
 }
 
@@ -82,6 +86,13 @@ const addChildBox = (parentId: string) => {
 
   flowData.connections.push(newConnection)
 }
+
+// Computed property for valid connections (both refs exist)
+const validConnections = computed(() => {
+  return flowData.connections.filter(connection =>
+    boxRefs[connection.start] && boxRefs[connection.end]
+  )
+})
 </script>
 
 <template>
@@ -99,7 +110,7 @@ const addChildBox = (parentId: string) => {
 
   <!-- Render connections dynamically -->
   <ConnectionLine
-    v-for="connection in flowData.connections"
+    v-for="connection in validConnections"
     :key="`${connection.start}-${connection.end}`"
     :start="boxRefs[connection.start]"
     :end="boxRefs[connection.end]"
