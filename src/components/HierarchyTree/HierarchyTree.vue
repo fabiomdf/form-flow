@@ -4,9 +4,14 @@ import ConnectionLine from './components/ConnectionLine.vue'
 import { useFlowData } from '@/components/HierarchyTree/composables/useFlowData'
 import type { FlowData } from '@/components/HierarchyTree/types/flow'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   initialData: FlowData
-}>()
+  showAddButton?: boolean
+  showRemoveButton?: boolean
+}>(), {
+  showAddButton: true,
+  showRemoveButton: true
+})
 
 const {
   flowData,
@@ -29,6 +34,8 @@ const {
     :id="box.id"
     :label="box.label"
     :initialPosition="box.position"
+    :show-add-button="props.showAddButton"
+    :show-remove-button="props.showRemoveButton"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"

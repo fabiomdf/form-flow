@@ -20,5 +20,9 @@ const initialFlowData: FlowData = {
 </script>
 
 <template>
-  <HierarchyTree :initial-data="initialFlowData" />
+  <HierarchyTree
+    :initial-data="initialFlowData"
+    :show-add-button="false"
+    :show-remove-button="false"
+  />
 </template>

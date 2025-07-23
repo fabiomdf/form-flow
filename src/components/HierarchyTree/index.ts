@@ -9,8 +9,7 @@ export type {
   BoxData,
   ConnectionData,
   Position,
-  BoxElement
-} from './types/flow'
-
-// Also export the component explicitly for named imports if needed
+  BoxElement,
+  HierarchyTreeProps
+} from './types/flow'// Also export the component explicitly for named imports if needed
 export { HierarchyTree }

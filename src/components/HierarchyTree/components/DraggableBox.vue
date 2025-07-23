@@ -10,6 +10,8 @@ const props = defineProps<{
   initialPosition?: Position
   id: string
   label: string
+  showAddButton?: boolean
+  showRemoveButton?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -81,10 +83,12 @@ defineExpose({ boxRef })
       @click="handleInputClick"
     />
     <AddNewDraggableBox
+      v-if="props.showAddButton"
       :parent-id="id"
       @add-child="handleAddChild"
     />
     <RemoveDraggableBox
+      v-if="props.showRemoveButton"
       :box-id="id"
       @remove-box="handleRemoveBox"
     />

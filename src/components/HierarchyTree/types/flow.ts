@@ -22,3 +22,9 @@ export interface FlowData {
 export interface BoxElement {
   boxRef: HTMLElement
 }
+
+export interface HierarchyTreeProps {
+  initialData: FlowData
+  showAddButton?: boolean
+  showRemoveButton?: boolean
+}
