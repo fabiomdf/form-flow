@@ -15,6 +15,10 @@ const props = defineProps<{
   showRemoveButton?: boolean
   allowLabelEdit?: boolean
   enableShadow?: boolean
+  boxBackgroundColor?: string
+  boxLabelColor?: string
+  editFieldBorderColor?: string
+  editFieldBackgroundColor?: string
 }>()
 
 const emit = defineEmits<{
@@ -84,7 +88,9 @@ defineExpose({ boxRef })
       top: position.y + 'px',
       left: position.x + 'px',
       width: boxSize.width + 'px',
-      height: boxSize.height + 'px'
+      height: boxSize.height + 'px',
+      backgroundColor: props.boxBackgroundColor || '#42b983',
+      color: props.boxLabelColor || 'white'
     }"
     @mousedown="handleDragStart"
     @dblclick="handleDoubleClick"
@@ -102,6 +108,10 @@ defineExpose({ boxRef })
       ref="inputRef"
       v-model="tempLabel"
       class="label-input"
+      :style="{
+        backgroundColor: props.editFieldBackgroundColor || 'rgba(255, 255, 255, 0.9)',
+        borderColor: props.editFieldBorderColor || '#4CAF50'
+      }"
       @keydown="handleKeydown"
       @blur="saveLabel"
       @click="handleInputClick"
@@ -124,8 +134,6 @@ defineExpose({ boxRef })
     position: absolute;
     width: 150px;
     height: 100px;
-    background-color: #42b983;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -152,9 +160,8 @@ defineExpose({ boxRef })
 }
 
 .label-input {
-    background: rgba(255, 255, 255, 0.9);
     color: #333;
-    border: 2px solid #4CAF50;
+    border: 2px solid;
     border-radius: 4px;
     padding: 4px 8px;
     font-size: 14px;
@@ -164,7 +171,7 @@ defineExpose({ boxRef })
 }
 
 .label-input:focus {
-    border-color: #45a049;
-    box-shadow: 0 0 5px rgba(69, 160, 73, 0.5);
+    opacity: 0.9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>

@@ -28,5 +28,9 @@ const initialFlowData: FlowData = {
     :box-width="200"
     :box-height="120"
     :enable-shadow="true"
+    box-background-color="#2c3e50"
+    box-label-color="#ecf0f1"
+    edit-field-border-color="#FFFFFF"
+    edit-field-background-color="rgba(255, 255, 255, 0.10)"
   />
 </template>

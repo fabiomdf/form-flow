@@ -37,4 +37,8 @@ export interface HierarchyTreeProps {
   boxWidth?: number
   boxHeight?: number
   enableShadow?: boolean
+  boxBackgroundColor?: string
+  boxLabelColor?: string
+  editFieldBorderColor?: string
+  editFieldBackgroundColor?: string
 }

@@ -12,13 +12,21 @@ const props = withDefaults(defineProps<{
   boxWidth?: number
   boxHeight?: number
   enableShadow?: boolean
+  boxBackgroundColor?: string
+  boxLabelColor?: string
+  editFieldBorderColor?: string
+  editFieldBackgroundColor?: string
 }>(), {
   showAddButton: true,
   showRemoveButton: true,
   allowLabelEdit: true,
   boxWidth: 150,
   boxHeight: 100,
-  enableShadow: true
+  enableShadow: true,
+  boxBackgroundColor: '#42b983',
+  boxLabelColor: 'white',
+  editFieldBorderColor: '#4CAF50',
+  editFieldBackgroundColor: 'rgba(255, 255, 255, 0.9)'
 })
 
 import type { BoxData } from '@/components/HierarchyTree/types/flow'
@@ -55,6 +63,10 @@ const {
     :show-remove-button="props.showRemoveButton"
     :allow-label-edit="props.allowLabelEdit"
     :enable-shadow="props.enableShadow"
+    :box-background-color="props.boxBackgroundColor"
+    :box-label-color="props.boxLabelColor"
+    :edit-field-border-color="props.editFieldBorderColor"
+    :edit-field-background-color="props.editFieldBackgroundColor"
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"
