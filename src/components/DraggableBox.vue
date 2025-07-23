@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, defineExpose } from 'vue'
 import AddNewDraggableBox from './AddNewDraggableBox.vue'
+import RemoveDraggableBox from './RemoveDraggableBox.vue'
 
 interface Position {
     x: number
@@ -17,6 +18,7 @@ const emit = defineEmits<{
   addChild: [parentId: string]
   updateLabel: [id: string, newLabel: string]
   updatePosition: [id: string, position: Position]
+  removeBox: [boxId: string]
 }>()
 
 const position = ref<Position>(props.initialPosition || { x: 100, y: 100 })
@@ -53,13 +55,17 @@ const stopDrag = () => {
     dragging.value = false
     window.removeEventListener('mousemove', onDrag)
     window.removeEventListener('mouseup', stopDrag)
-    
+
     // Emit position update when dragging stops
     emit('updatePosition', props.id, position.value)
 }
 
 const handleAddChild = (parentId: string) => {
   emit('addChild', parentId)
+}
+
+const handleRemoveBox = (boxId: string) => {
+  emit('removeBox', boxId)
 }
 
 const startEditing = (event: MouseEvent) => {
@@ -123,6 +129,10 @@ defineExpose({ boxRef })
         <AddNewDraggableBox
           :parent-id="id"
           @add-child="handleAddChild"
+        />
+        <RemoveDraggableBox
+          :box-id="id"
+          @remove-box="handleRemoveBox"
         />
     </div>
 </template>

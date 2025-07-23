@@ -107,6 +107,48 @@ const updateBoxPosition = (boxId: string, newPosition: { x: number; y: number })
   }
 }
 
+// Function to get all descendant box IDs recursively
+const getAllDescendants = (boxId: string): string[] => {
+  const descendants: string[] = []
+  const directChildren = flowData.connections
+    .filter(conn => conn.start === boxId)
+    .map(conn => conn.end)
+  
+  for (const childId of directChildren) {
+    descendants.push(childId)
+    // Recursively get descendants of this child
+    descendants.push(...getAllDescendants(childId))
+  }
+  
+  return descendants
+}
+
+// Function to remove box and all its descendants
+const removeBox = (boxId: string) => {
+  // Get all descendants before removing anything
+  const descendantsToRemove = getAllDescendants(boxId)
+  const allBoxesToRemove = [boxId, ...descendantsToRemove]
+  
+  // Remove all connections involving any of the boxes to be removed
+  flowData.connections = flowData.connections.filter(connection => 
+    !allBoxesToRemove.includes(connection.start) && 
+    !allBoxesToRemove.includes(connection.end)
+  )
+  
+  // Remove all boxes
+  flowData.boxes = flowData.boxes.filter(box => 
+    !allBoxesToRemove.includes(box.id)
+  )
+  
+  // Clean up box references
+  allBoxesToRemove.forEach(id => {
+    delete boxRefs[id]
+  })
+  
+  // Print the updated flow data to console
+  console.log('Updated FlowData after removal:', JSON.stringify(flowData, null, 2))
+}
+
 // Computed property for valid connections (both refs exist)
 const validConnections = computed(() => {
   return flowData.connections.filter(connection =>
@@ -127,6 +169,7 @@ const validConnections = computed(() => {
     @add-child="addChildBox"
     @update-label="updateBoxLabel"
     @update-position="updateBoxPosition"
+    @remove-box="removeBox"
   >
   </DraggableBox>
 
