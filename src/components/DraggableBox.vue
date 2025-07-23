@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, defineExpose } from 'vue'
+import AddNewDraggableBox from './AddNewDraggableBox.vue'
 
 interface Position {
     x: number
@@ -8,6 +9,11 @@ interface Position {
 
 const props = defineProps<{
     initialPosition?: Position
+    id: string
+}>()
+
+const emit = defineEmits<{
+  addChild: [parentId: string]
 }>()
 
 const position = ref<Position>(props.initialPosition || { x: 100, y: 100 })
@@ -40,6 +46,10 @@ const stopDrag = () => {
     window.removeEventListener('mouseup', stopDrag)
 }
 
+const handleAddChild = (parentId: string) => {
+  emit('addChild', parentId)
+}
+
 defineExpose({ boxRef })
 </script>
 
@@ -47,6 +57,10 @@ defineExpose({ boxRef })
     <div class="draggable-box" :style="{ top: position.y + 'px', left: position.x + 'px' }" @mousedown="startDrag"
         ref="boxRef">
         <slot />
+        <AddNewDraggableBox
+          :parent-id="id"
+          @add-child="handleAddChild"
+        />
     </div>
 </template>
 
