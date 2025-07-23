@@ -5,6 +5,7 @@ interface FlowDataOptions {
   boxWidth: number
   boxHeight: number
   enableCollisionAvoidance: boolean
+  enableConsoleLog: boolean
 }
 
 export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
@@ -159,7 +160,9 @@ export function useFlowData(initialData: FlowData, options: FlowDataOptions) {
 
   // Helper function to log flow data
   const logFlowData = (action: string) => {
-    console.log(`${action} - FlowData:`, JSON.stringify(flowData, null, 2))
+    if (options.enableConsoleLog) {
+      console.log(`${action} - FlowData:`, JSON.stringify(flowData, null, 2))
+    }
   }
 
   // Computed property for valid connections
