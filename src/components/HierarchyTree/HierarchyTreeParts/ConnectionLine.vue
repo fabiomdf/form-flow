@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-
-interface BoxElement {
-  boxRef: HTMLElement
-}
+import type { BoxElement } from '@/types/flow'
 
 const props = defineProps<{
     start: BoxElement

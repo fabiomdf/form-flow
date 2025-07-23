@@ -2,16 +2,14 @@
 import { ref, defineExpose } from 'vue'
 import AddNewDraggableBox from './AddNewDraggableBox.vue'
 import RemoveDraggableBox from './RemoveDraggableBox.vue'
-
-interface Position {
-    x: number
-    y: number
-}
+import { useDrag } from '@/composables/useDrag'
+import { useLabelEdit } from '@/composables/useLabelEdit'
+import type { Position } from '@/types/flow'
 
 const props = defineProps<{
-    initialPosition?: Position
-    id: string
-    label: string
+  initialPosition?: Position
+  id: string
+  label: string
 }>()
 
 const emit = defineEmits<{
@@ -21,43 +19,34 @@ const emit = defineEmits<{
   removeBox: [boxId: string]
 }>()
 
-const position = ref<Position>(props.initialPosition || { x: 100, y: 100 })
-const dragging = ref(false)
-const offset = ref<Position>({ x: 0, y: 0 })
 const boxRef = ref<HTMLElement | null>(null)
-const isEditing = ref(false)
-const inputRef = ref<HTMLInputElement | null>(null)
-const tempLabel = ref(props.label)
 
-const startDrag = (event: MouseEvent) => {
-    // Don't start dragging if we're editing
-    if (isEditing.value) return
+// Drag functionality
+const { position, startDrag } = useDrag(
+  props.initialPosition || { x: 100, y: 100 },
+  (newPosition) => emit('updatePosition', props.id, newPosition)
+)
 
-    dragging.value = true
-    offset.value = {
-        x: event.clientX - position.value.x,
-        y: event.clientY - position.value.y,
-    }
+// Label editing functionality
+const { isEditing, tempLabel, inputRef, startEditing, saveLabel, handleKeydown } = useLabelEdit(
+  props.label,
+  (newLabel) => emit('updateLabel', props.id, newLabel)
+)
 
-    window.addEventListener('mousemove', onDrag)
-    window.addEventListener('mouseup', stopDrag)
+// Event handlers
+const handleDragStart = (event: MouseEvent) => {
+  if (!isEditing.value) {
+    startDrag(event)
+  }
 }
 
-const onDrag = (event: MouseEvent) => {
-    if (!dragging.value) return
-    position.value = {
-        x: event.clientX - offset.value.x,
-        y: event.clientY - offset.value.y,
-    }
+const handleDoubleClick = (event: MouseEvent) => {
+  event.stopPropagation()
+  startEditing()
 }
 
-const stopDrag = () => {
-    dragging.value = false
-    window.removeEventListener('mousemove', onDrag)
-    window.removeEventListener('mouseup', stopDrag)
-
-    // Emit position update when dragging stops
-    emit('updatePosition', props.id, position.value)
+const handleInputClick = (event: MouseEvent) => {
+  event.stopPropagation()
 }
 
 const handleAddChild = (parentId: string) => {
@@ -68,73 +57,38 @@ const handleRemoveBox = (boxId: string) => {
   emit('removeBox', boxId)
 }
 
-const startEditing = (event: MouseEvent) => {
-  // Prevent drag when double-clicking to edit
-  event.stopPropagation()
-  isEditing.value = true
-  tempLabel.value = props.label
-
-  // Focus the input after Vue updates the DOM
-  setTimeout(() => {
-    if (inputRef.value) {
-      inputRef.value.focus()
-      inputRef.value.select()
-    }
-  }, 0)
-}
-
-const saveLabel = () => {
-  if (tempLabel.value.trim() !== props.label) {
-    emit('updateLabel', props.id, tempLabel.value.trim())
-  }
-  isEditing.value = false
-}
-
-const cancelEditing = () => {
-  tempLabel.value = props.label
-  isEditing.value = false
-}
-
-const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Enter') {
-    saveLabel()
-  } else if (event.key === 'Escape') {
-    cancelEditing()
-  }
-}
-
-const handleInputClick = (event: MouseEvent) => {
-  // Prevent the box from being dragged when clicking on the input
-  event.stopPropagation()
-}
-
 defineExpose({ boxRef })
 </script>
 
 <template>
-    <div class="draggable-box" :style="{ top: position.y + 'px', left: position.x + 'px' }" @mousedown="startDrag"
-        ref="boxRef" @dblclick="startEditing">
-        <div v-if="!isEditing" class="box-content">
-          {{ props.label }}
-        </div>
-        <input
-          v-else
-          ref="inputRef"
-          v-model="tempLabel"
-          class="label-input"
-          @keydown="handleKeydown"
-          @blur="saveLabel"
-          @click="handleInputClick"
-        />
-        <AddNewDraggableBox
-          :parent-id="id"
-          @add-child="handleAddChild"
-        />
-        <RemoveDraggableBox
-          :box-id="id"
-          @remove-box="handleRemoveBox"
-        />
+  <div
+    class="draggable-box"
+    :style="{ top: position.y + 'px', left: position.x + 'px' }"
+    @mousedown="handleDragStart"
+    @dblclick="handleDoubleClick"
+    ref="boxRef"
+  >
+    <div v-if="!isEditing" class="box-content">
+      {{ props.label }}
     </div>
+    <input
+      v-else
+      ref="inputRef"
+      v-model="tempLabel"
+      class="label-input"
+      @keydown="handleKeydown"
+      @blur="saveLabel"
+      @click="handleInputClick"
+    />
+    <AddNewDraggableBox
+      :parent-id="id"
+      @add-child="handleAddChild"
+    />
+    <RemoveDraggableBox
+      :box-id="id"
+      @remove-box="handleRemoveBox"
+    />
+  </div>
 </template>
 
 <style scoped>

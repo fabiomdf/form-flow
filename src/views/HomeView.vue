@@ -1,21 +1,6 @@
 <script setup lang="ts">
 import HierarchyTree from '@/components/HierarchyTree/HierarchyTree.vue'
-
-interface BoxData {
-  id: string
-  label: string
-  position: { x: number; y: number }
-}
-
-interface ConnectionData {
-  start: string
-  end: string
-}
-
-interface FlowData {
-  boxes: BoxData[]
-  connections: ConnectionData[]
-}
+import type { FlowData } from '@/types/flow'
 
 // JSON representation of the flow
 const initialFlowData: FlowData = {
