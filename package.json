@@ -1,47 +1,52 @@
 {
-  "name": "form-flow",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "test:unit": "vitest",
-    "test:e2e": "playwright test",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build",
-    "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+  "name": "@fabiomdf/vue-hierarchy-tree",
+  "version": "1.0.2",
+  "description": "A Vue 3 component for creating interactive hierarchy trees with drag-and-drop functionality",
+  "main": "dist/vue-hierarchy-tree.umd.js",
+  "module": "dist/vue-hierarchy-tree.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vue-hierarchy-tree.mjs",
+      "require": "./dist/vue-hierarchy-tree.umd.js"
+    },
+    "./style.css": "./dist/vue-hierarchy-tree.css"
   },
-  "dependencies": {
-    "pinia": "^3.0.3",
-    "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+  "keywords": [
+    "vue",
+    "vue3",
+    "hierarchy",
+    "tree",
+    "component",
+    "drag-drop",
+    "flow-chart"
+  ],
+  "author": "Fabio Medeiros <fabiomdf@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiomdf/vue-hierarchy-tree.git"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.53.1",
-    "@tsconfig/node22": "^22.0.2",
-    "@types/jsdom": "^21.1.7",
     "@types/node": "^22.15.32",
     "@vitejs/plugin-vue": "^6.0.0",
-    "@vitejs/plugin-vue-jsx": "^5.0.0",
-    "@vitest/eslint-plugin": "^1.2.7",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.5.1",
-    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.29.0",
-    "eslint-plugin-playwright": "^2.2.0",
-    "eslint-plugin-vue": "~10.2.0",
-    "jiti": "^2.4.2",
-    "jsdom": "^26.1.0",
-    "npm-run-all2": "^8.0.4",
-    "prettier": "3.5.3",
     "typescript": "~5.8.0",
     "vite": "^7.0.0",
-    "vite-plugin-vue-devtools": "^7.7.7",
-    "vitest": "^3.2.4",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "^3.5.17",
     "vue-tsc": "^2.2.10"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
   }
 }
