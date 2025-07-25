@@ -14,6 +14,10 @@ A Vue 3 component for creating interactive hierarchy trees with drag-and-drop fu
 - 🎪 **Collision Avoidance**: Smart positioning to prevent overlapping boxes
 - 🎯 **Selection Highlighting**: Visual feedback for selected boxes
 
+## Demo
+
+![Hierarchy Tree Component - Live Demo](./assets/demo.gif)
+
 ## Installation
 
 ```bash
